@@ -36,7 +36,7 @@ export class UserEntity {
   @Matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
     message: 'Formato de CPF inválido, exemplo: 000.000.000-00',
   })
-  @Column({ name: 'cpf', length: 11, nullable: false })
+  @Column({ name: 'cpf', length: 14, nullable: false })
   cpf: string;
 
   @Column({ name: 'cell_number', length: 15, nullable: false })

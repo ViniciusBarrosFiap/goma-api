@@ -4,5 +4,6 @@ export class UserListDTO {
     readonly id: string,
     readonly name: string,
     readonly email: string,
+    readonly cpf: string,
   ) {}
 }

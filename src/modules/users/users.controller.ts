@@ -1,24 +1,43 @@
 import {
+  Body,
   Controller,
   Get,
-  // Post,
+  Post,
   // Body,
   // Patch,
   // Param,
   // Delete,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-// import { CreateUserDto } from './dto/CreateUser.dto';
+import { HashPasswordPipe } from 'src/resources/pipes/hash-password.pipe';
+import { UserListDTO } from './dto/UserList.dto';
+import { CreateUserDto } from './dto/CreateUser.dto';
 // import { UpdateUserDto } from './dto/UpdateUser.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  // @Post()
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.usersService.create(createUserDto);
-  // }
+  @Post()
+  async createUser(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    @Body() { password, ...userData }: CreateUserDto,
+    @Body('password', HashPasswordPipe) hashPassword: string,
+  ) {
+    const createdUser = await this.userService.createUser({
+      ...userData,
+      password: hashPassword,
+    });
+    return {
+      user: new UserListDTO(
+        createdUser.id,
+        createdUser.name,
+        createdUser.email,
+        createdUser.cpf,
+      ),
+      message: 'Usuário criado com sucesso',
+    };
+  }
 
   @Get()
   async listAllUsers() {
