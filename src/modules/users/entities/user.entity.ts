@@ -19,7 +19,7 @@ export class UserEntity {
   name: string;
 
   @IsEmail(undefined, { message: 'Email é inválido' })
-  @EmailIsUnique({ message: 'Email  já cadastrado' })
+  @EmailIsUnique({ message: 'Email  já cadastrado' }) //custom validator
   @Column({ name: 'email', length: 70, nullable: false })
   email: string;
 
