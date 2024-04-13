@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { IsEmail, IsNotEmpty, Matches } from 'class-validator';
+import { EmailIsUnique } from '../validators/email-verificator.validator';
 @Entity('users')
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -18,6 +19,7 @@ export class UserEntity {
   name: string;
 
   @IsEmail(undefined, { message: 'Email é inválido' })
+  @EmailIsUnique({ message: 'Email  já cadastrado' })
   @Column({ name: 'email', length: 70, nullable: false })
   email: string;
 

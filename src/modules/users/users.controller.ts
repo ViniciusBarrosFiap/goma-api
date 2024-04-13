@@ -13,7 +13,7 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly userService: UsersService) {}
 
   // @Post()
   // create(@Body() createUserDto: CreateUserDto) {
@@ -22,7 +22,7 @@ export class UsersController {
 
   @Get()
   async listAllUsers() {
-    return await this.usersService.listAllUsers();
+    return await this.userService.listAllUsers();
   }
 
   // @Get(':id')
