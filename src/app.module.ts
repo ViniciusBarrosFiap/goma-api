@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './modulos/users/users.module';
+import { UsersModule } from './modules/users/users.module';
 
 //Arquivo dedicado a integrar os módulos de toda a aplicação
 @Module({
