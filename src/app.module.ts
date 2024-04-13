@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { UsersModule } from './modulos/users/users.module';
 
+//Arquivo dedicado a integrar os módulos de toda a aplicação
 @Module({
-  imports: [],
-  controllers: [AppController], //Especifica o arquivo de controllers
-  providers: [AppService], //Especifica o arquivo de providers
+  //Definindo as classes necessárias para a aplicação
+  imports: [UsersModule],
+  //Especifica as classes que irão fornecer funções para aplicação
+  providers: [],
 })
 export class AppModule {}
