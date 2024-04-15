@@ -2,22 +2,24 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
-  // Body,
-  // Patch,
-  // Param,
-  // Delete,
+  Put,
+  UseInterceptors,
+  Delete,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { HashPasswordPipe } from 'src/resources/pipes/hash-password.pipe';
 import { UserListDTO } from './dto/UserList.dto';
 import { CreateUserDto } from './dto/CreateUser.dto';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import { UpdateUserDTO } from './dto/UpdateUser.dto';
 // import { UpdateUserDto } from './dto/UpdateUser.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
-
+  //method for create a user
   @Post()
   async createUser(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -38,24 +40,34 @@ export class UsersController {
       message: 'Usuário criado com sucesso',
     };
   }
-
+  //method for listing all users
   @Get()
+  @UseInterceptors(CacheInterceptor)
   async listAllUsers() {
     return await this.userService.listAllUsers();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.usersService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update(+id, updateUserDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.usersService.remove(+id);
-  // }
+  //method for getting one specific user by id
+  @Get(':id')
+  @UseInterceptors(CacheInterceptor)
+  async getUser(@Param('id') id: string) {
+    const user = await this.userService.searchByID(id);
+    return {
+      user: new UserListDTO(user.id, user.name, user.email, user.cpf),
+    };
+  }
+  //method to update an existing user
+  @Put(':id')
+  async updateUser(@Param('id') id: string, @Body() updateData: UpdateUserDTO) {
+    const updatedUser = await this.userService.updateUser(id, updateData);
+    return {
+      user: updatedUser,
+      message: 'Usuário atualizado com sucesso',
+    };
+  }
+  //method to delete a user from the
+  @Delete(':id')
+  async removeUser(@Param('id') id: string) {
+    return await this.userService.deleteUser(id);
+  }
 }

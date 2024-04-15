@@ -23,12 +23,12 @@ export class UserEntity {
   @Column({ name: 'email', length: 70, nullable: false })
   email: string;
 
-  @Exclude()
   @IsNotEmpty({ message: 'Senha não pode ser vázia' })
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W+)(.{6,30})$/, {
     message:
       'A senha deve conter pelo menos uma letra minúscula, uma letra maiúscula, um dígito, um caractere especial e ter entre 8 e 30 caracteres',
   })
+  @Exclude()
   @Column({ name: 'password', length: 255, nullable: false })
   password: string;
 
