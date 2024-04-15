@@ -1,17 +1,20 @@
 import {
   ValidationOptions,
+  ValidatorConstraint,
   ValidatorConstraintInterface,
   registerDecorator,
 } from 'class-validator';
-import { UsersService } from '../users.service';
-import { NotFoundException } from '@nestjs/common';
-
+import { UserService } from '../users.service';
+import { Injectable, NotFoundException } from '@nestjs/common';
+@Injectable()
+@ValidatorConstraint({ async: true })
 export class EmailIsUniqueValidator implements ValidatorConstraintInterface {
-  constructor(private userService: UsersService) {}
+  constructor(private readonly userService: UserService) {}
 
-  async validate(email: string): Promise<boolean> {
+  async validate(value: any): Promise<boolean> {
     try {
-      const userAlredyExist = await this.userService.searchWithEmail(email);
+      console.log('teste');
+      const userAlredyExist = await this.userService.searchWithEmail(value);
 
       return !userAlredyExist;
     } catch (error) {
@@ -23,8 +26,9 @@ export class EmailIsUniqueValidator implements ValidatorConstraintInterface {
     }
   }
 }
-export const EmailIsUnique = (validationOptions: ValidationOptions) => {
-  return (object: object, properties: string) => {
+export const EmailIsUnique = (validationOptions?: ValidationOptions) => {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  return (object: Object, properties: string) => {
     registerDecorator({
       target: object.constructor,
       propertyName: properties,

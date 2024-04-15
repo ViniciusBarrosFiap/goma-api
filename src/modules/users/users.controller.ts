@@ -8,22 +8,22 @@ import {
   UseInterceptors,
   Delete,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UserService } from './users.service';
 import { HashPasswordPipe } from 'src/resources/pipes/hash-password.pipe';
 import { UserListDTO } from './dto/UserList.dto';
-import { CreateUserDto } from './dto/CreateUser.dto';
+import { CreateUserDTO } from './dto/CreateUser.dto';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { UpdateUserDTO } from './dto/UpdateUser.dto';
 // import { UpdateUserDto } from './dto/UpdateUser.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly userService: UserService) {}
   //method for create a user
   @Post()
   async createUser(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @Body() { password, ...userData }: CreateUserDto,
+    @Body() { password, ...userData }: CreateUserDTO,
     @Body('password', HashPasswordPipe) hashPassword: string,
   ) {
     const createdUser = await this.userService.createUser({

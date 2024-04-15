@@ -3,13 +3,13 @@ import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserListDTO } from './dto/UserList.dto';
-import { CreateUserDto } from './dto/CreateUser.dto';
+import { CreateUserDTO } from './dto/CreateUser.dto';
 import { UpdateUserDTO } from './dto/UpdateUser.dto';
 
 //This file is responsable for the logic for Users module
 
 @Injectable() //Define class as Injectable
-export class UsersService {
+export class UserService {
   //Start variable with functions from Repository
   constructor(
     @InjectRepository(UserEntity) //Injecting a Repository
@@ -34,7 +34,7 @@ export class UsersService {
     return user;
   }
   //Function for create a user
-  async createUser(userData: CreateUserDto) {
+  async createUser(userData: CreateUserDTO) {
     const userEntity = new UserEntity();
     Object.assign(userEntity, userData as UserEntity);
 
@@ -42,7 +42,7 @@ export class UsersService {
   }
   //Function for search user with email
   async searchWithEmail(email: string) {
-    const checkEmail = this.userRepository.findOne({
+    const checkEmail = await this.userRepository.findOne({
       where: { email },
     });
     if (checkEmail == null) {
