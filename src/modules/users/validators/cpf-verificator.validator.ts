@@ -8,32 +8,29 @@ import { UserService } from '../users.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 @Injectable()
 @ValidatorConstraint({ async: true })
-export class EmailIsUniqueValidator implements ValidatorConstraintInterface {
-  constructor(private readonly userService: UserService) {}
-
+export class CpfIsUniqueValidator implements ValidatorConstraintInterface {
+  constructor(private userService: UserService) {}
   async validate(value: any): Promise<boolean> {
     try {
-      const userAlredyExist = await this.userService.searchWithEmail(value);
-
-      return !userAlredyExist;
+      const userWithCpfExist = await this.userService.searchByCpf(value);
+      return !userWithCpfExist;
     } catch (error) {
       if (error instanceof NotFoundException) {
         return true;
       }
-
-      return true;
+      return false;
     }
   }
 }
-export const EmailIsUnique = (validationOptions?: ValidationOptions) => {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  return (object: Object, properties: string) => {
+
+export const CpfIsUnique = (validationOptions: ValidationOptions) => {
+  return (object: object, propertie: string) => {
     registerDecorator({
       target: object.constructor,
-      propertyName: properties,
+      propertyName: propertie,
       options: validationOptions,
       constraints: [],
-      validator: EmailIsUniqueValidator,
+      validator: CpfIsUniqueValidator,
     });
   };
 };

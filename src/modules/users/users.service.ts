@@ -50,6 +50,34 @@ export class UserService {
     }
     return checkEmail;
   }
+  async searchByCpf(cpf: string) {
+    const checkCpf = await this.userRepository.findOne({
+      where: { cpf },
+    });
+    if (checkCpf == null) {
+      throw new NotFoundException(
+        `Usuário com cpf: ${cpf}, não foi encontrado`,
+      );
+    }
+    return checkCpf;
+  }
+  async checkYearsOld(dateOfBirth: string) {
+    console.log('teste');
+    const [day, month, year] = dateOfBirth.split('/').map(Number);
+    const birthDate = new Date(year, month - 1, day); // month - 1 porque os meses em JavaScript são baseados em zero
+
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age >= 18;
+  }
   //Function to update user data
   async updateUser(id: string, newData: UpdateUserDTO) {
     const user = await this.searchByID(id);

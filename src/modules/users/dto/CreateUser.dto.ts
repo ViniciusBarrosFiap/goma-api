@@ -2,6 +2,8 @@
 // import { UserEntity } from '../entities/user.entity';
 import { IsEmail, IsNotEmpty, IsOptional, Matches } from 'class-validator';
 import { EmailIsUnique } from '../validators/email-verificator.validator';
+import { CpfIsUnique } from '../validators/cpf-verificator.validator';
+import { IsOverEighteen } from '../validators/over-eighteen.validator';
 
 export class CreateUserDTO {
   @IsNotEmpty({ message: 'O nome não pode ser vázio' })
@@ -22,6 +24,7 @@ export class CreateUserDTO {
   @Matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
     message: 'Formato de CPF inválido, exemplo: 000.000.000-00',
   })
+  @CpfIsUnique({ message: 'O cpf já foi cadastrado' })
   cpf: string;
 
   @IsOptional()
@@ -29,7 +32,9 @@ export class CreateUserDTO {
 
   @IsOptional()
   address?: string;
+
   @IsNotEmpty({ message: 'Data de nascimento não pode ser inválida' })
+  @IsOverEighteen({ message: 'É preciso ser maior de idade para se cadastrar' })
   dateBirthday: string;
 
   @IsOptional()
