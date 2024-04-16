@@ -6,7 +6,6 @@ import { ConfigModule } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { ProductsModule } from './modules/products/products.module';
-import { ProductsModule } from './modules/products/products.module';
 //Arquivo dedicado a integrar os módulos de toda a aplicação
 @Module({
   //Definindo as classes necessárias para a aplicação
