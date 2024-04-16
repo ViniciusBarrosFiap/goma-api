@@ -1,13 +1,16 @@
 import {
   Controller,
   Get,
-  // Post,
-  // Body,
+  UseInterceptors,
+  Post,
+  Body,
   // Patch,
   // Param,
   // Delete,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CreateProductDTO } from './dto/create-product.dto';
 // import { CreateProductDTO } from './dto/create-product.dto';
 // import { UpdateProductDTO } from './dto/update-product.dto';
 
@@ -15,12 +18,15 @@ import { ProductsService } from './products.service';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  // @Post()
-  // create(@Body() createProductDto: CreateProductDTO) {
-  //   return this.productsService.create(createProductDto);
-  // }
+  @Post()
+  async createProduct(@Body() productData: CreateProductDTO) {
+    const createdProduct =
+      await this.productsService.createProduct(productData);
+    return createdProduct;
+  }
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
   async listAllProducts() {
     return await this.productsService.listAllProducts();
   }

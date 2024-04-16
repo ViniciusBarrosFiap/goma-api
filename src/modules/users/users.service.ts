@@ -64,7 +64,6 @@ export class UserService {
   }
   //Function to check if user is over eighteen
   async checkYearsOld(dateOfBirth: string) {
-    console.log('teste');
     const [day, month, year] = dateOfBirth.split('/').map(Number);
     const birthDate = new Date(year, month - 1, day); // month - 1 porque os meses em JavaScript são baseados em zero
 
