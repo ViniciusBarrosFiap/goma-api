@@ -50,6 +50,7 @@ export class UserService {
     }
     return checkEmail;
   }
+  //Function for search user with cpf
   async searchByCpf(cpf: string) {
     const checkCpf = await this.userRepository.findOne({
       where: { cpf },
@@ -61,6 +62,7 @@ export class UserService {
     }
     return checkCpf;
   }
+  //Function to check if user is over eighteen
   async checkYearsOld(dateOfBirth: string) {
     console.log('teste');
     const [day, month, year] = dateOfBirth.split('/').map(Number);
