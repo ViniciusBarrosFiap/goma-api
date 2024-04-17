@@ -20,7 +20,7 @@ export class ProductsService {
     private productRepository: Repository<ProductEntity>,
     private readonly configService: ConfigService,
   ) {}
-
+  //Function for upload images of product
   async uploadImagesS3(files: { fileName: string; file: Buffer }[]) {
     const signedUrls: string[] = [];
     for (const file of files) {

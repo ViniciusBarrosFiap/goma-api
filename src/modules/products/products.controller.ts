@@ -21,12 +21,11 @@ export class ProductsController {
 
   @Post()
   async createProduct(@Body() productData: CreateProductDTO) {
-    const createdProduct = await this.productsService.createProduct(
-      productData,
-    );
+    const createdProduct =
+      await this.productsService.createProduct(productData);
     return createdProduct;
   }
-
+  //Implementing method for upload images of images
   @Post('/upload')
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
