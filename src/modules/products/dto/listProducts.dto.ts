@@ -5,7 +5,7 @@ class ListCharacteristicsProductsDTO {
 
 class ListImagesProductsDTO {
   url: string;
-  alt: string;
+  alt?: string;
 }
 
 export class ListProductsDTO {

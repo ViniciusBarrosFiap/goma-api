@@ -3,6 +3,7 @@ import {
   IsArray,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   IsUrl,
   MaxLength,
@@ -29,7 +30,8 @@ export class ProductImagesDTO {
   url: string;
   @IsString()
   @IsNotEmpty({ message: 'O alt não pode ser vázio' })
-  alt: string;
+  @IsOptional()
+  alt?: string;
   product: ProductEntity;
 }
 export class CreateProductDTO {
@@ -42,7 +44,7 @@ export class CreateProductDTO {
   @IsNumber()
   @IsNotEmpty({ message: 'Preço não pode ser vázio' })
   @Min(1, { message: 'O valor precisa ser maior que zero' })
-  price: string;
+  price: number;
   @IsString()
   @IsNotEmpty({ message: 'Categoria não pode ser vázio' })
   category: string;

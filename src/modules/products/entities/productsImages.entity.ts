@@ -7,8 +7,8 @@ export class ProductsImagesEntity {
   id: string;
   @Column({ name: 'url', length: 100, nullable: false })
   url: string;
-  @Column({ name: 'alt', length: 100, nullable: false })
-  alt: string;
+  @Column({ name: 'alt', length: 100, nullable: true })
+  alt?: string;
   @ManyToOne(() => ProductEntity, (product) => product.images, {
     orphanedRowAction: 'delete',
     onUpdate: 'CASCADE',
