@@ -7,11 +7,13 @@ import {
   Param,
   Put,
   Delete,
+  UploadedFiles,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { CreateProductDTO } from './dto/create-product.dto';
 import { UpdateProductDTO } from './dto/update-product.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')
 export class ProductsController {
@@ -25,6 +27,16 @@ export class ProductsController {
     return createdProduct;
   }
 
+  @Post('/upload')
+  @UseInterceptors(FilesInterceptor('files'))
+  async uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
+    const fileData = files.map((file) => ({
+      fileName: file.originalname,
+      file: file.buffer,
+    }));
+    const signedUrls = await this.productsService.uploadImagesS3(fileData);
+    return { urls: signedUrls };
+  }
   @Get()
   @UseInterceptors(CacheInterceptor)
   async listAllProducts() {
