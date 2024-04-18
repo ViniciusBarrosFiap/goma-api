@@ -19,12 +19,19 @@ import { UpdateOrderDTO } from './dto/update-order.dto';
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
+  @Get()
+  async getOrderFromUser(@Req() req: RequestWithUser) {
+    const userId = req.user.sub;
+    const orders = await this.ordersService.getOrderOfUser(userId);
+    return orders;
+  }
   @Post()
   async createOrder(
     @Req() req: RequestWithUser,
     @Body() orderData: CreateOrderDTO,
   ) {
     const userId = req.user.sub;
+    // console.log(userId);
     const createdOrder = await this.ordersService.createOrder(
       userId,
       orderData,
@@ -36,8 +43,8 @@ export class OrdersController {
     };
   }
 
-  @Get()
-  async getOrderOfUser(
+  @Post(':id')
+  async updateOrder(
     @Req() req: RequestWithUser,
     @Param('id') orderId: string,
     @Body() newOrderData: UpdateOrderDTO,

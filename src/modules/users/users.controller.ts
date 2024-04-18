@@ -7,6 +7,7 @@ import {
   Put,
   UseInterceptors,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './users.service';
 import { HashPasswordPipe } from 'src/resources/pipes/hash-password.pipe';
@@ -14,6 +15,7 @@ import { UserListDTO } from './dto/UserList.dto';
 import { CreateUserDTO } from './dto/CreateUser.dto';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { UpdateUserDTO } from './dto/UpdateUser.dto';
+import { AuthenticationGuard } from '../authentication/authentication.guard';
 // import { UpdateUserDto } from './dto/UpdateUser.dto';
 
 @Controller('users')
@@ -58,6 +60,7 @@ export class UsersController {
   }
   //method to update an existing user
   @Put(':id')
+  @UseGuards(AuthenticationGuard)
   async updateUser(@Param('id') id: string, @Body() updateData: UpdateUserDTO) {
     const updatedUser = await this.userService.updateUser(id, updateData);
     return {

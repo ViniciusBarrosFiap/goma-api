@@ -14,6 +14,7 @@ import { CacheInterceptor } from '@nestjs/cache-manager';
 import { CreateProductDTO } from './dto/create-product.dto';
 import { UpdateProductDTO } from './dto/update-product.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { AuthenticationGuard } from '../authentication/authentication.guard';
 
 @Controller('products')
 export class ProductsController {
@@ -36,6 +37,7 @@ export class ProductsController {
     const signedUrls = await this.productsService.uploadImagesS3(fileData);
     return { urls: signedUrls };
   }
+  @UseInterceptors(AuthenticationGuard)
   @Get()
   @UseInterceptors(CacheInterceptor)
   async listAllProducts() {

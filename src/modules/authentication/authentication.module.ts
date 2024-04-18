@@ -1,25 +1,27 @@
 import { Module } from '@nestjs/common';
-import { AuthenticationService } from './authentication.service';
-import { AuthenticationController } from './authentication.controller';
-import { UserModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import 'dotenv/config';
+import { UserModule } from '../users/users.module';
+import { AuthenticatorController } from './authentication.controller';
+import { AuthenticatorService } from './authentication.service';
+
+//Definindo módulo de autenticação
+
 @Module({
   imports: [
-    UserModule,
+    UserModule, //Importa o modulo de usuário
     JwtModule.registerAsync({
-      useFactory: () => {
+      useFactory: (configService: ConfigService) => {
         return {
-          secret: process.env.SECRET_JWT,
-          signOptions: { expiresIn: '72h' },
+          secret: configService.get<string>('SEGREDO_JWT'), //Atribui a chave segreta do JWT
+          signOptions: { expiresIn: '72h' }, //Define o tempo que o token é válido
         };
       },
-      inject: [ConfigService],
-      global: true,
+      inject: [ConfigService], //Injeta o ConfigService para acessar o token
+      global: true, //Permite que seja usado em toda aplicação
     }),
   ],
-  controllers: [AuthenticationController],
-  providers: [AuthenticationService],
+  controllers: [AuthenticatorController], //Declara o controller da autenticação
+  providers: [AuthenticatorService], //Declara a classe responsável pela lógica de autenticação
 })
-export class AuthenticationModule {}
+export class AuthenticationModule {} //Exporta o módulo
