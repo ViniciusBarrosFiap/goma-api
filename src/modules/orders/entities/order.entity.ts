@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/modules/users/entities/user.entity';
+import { UserEntity } from '../../users/entities/user.entity';
 import { OrderStatus } from '../enum/orderStatus.enum';
 import { OrderItensEntity } from './orderItens.entity';
 import {
@@ -17,14 +17,14 @@ export class OrderEntity {
   id: string;
   @Column({ name: 'amount', nullable: false })
   amount: number;
-  @Column({ name: 'status', nullable: false })
+  @Column({ name: 'status', enum: OrderStatus, nullable: false })
   status: OrderStatus;
   @ManyToOne(() => UserEntity, (user) => user.orders)
   user: UserEntity;
   @OneToMany(() => OrderItensEntity, (orderItens) => orderItens.order, {
     cascade: true,
   })
-  orderItens: OrderItensEntity;
+  orderItens: OrderItensEntity[];
   @CreateDateColumn()
   createdAt: string;
   @UpdateDateColumn()

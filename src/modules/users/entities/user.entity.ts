@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { OrderEntity } from 'src/modules/orders/entities/order.entity';
+import { OrderEntity } from '../../orders/entities/order.entity';
 // import { IsEmail, IsNotEmpty, IsOptional, Matches } from 'class-validator';
 // import { EmailIsUnique } from '../validators/email-verificator.validator';
 @Entity('users')

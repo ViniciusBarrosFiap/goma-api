@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateTablesOrders1713381788163 implements MigrationInterface {
-  name = 'CreateTablesOrders1713381788163';
+export class CriaRelacionamentos1713389998980 implements MigrationInterface {
+  name = 'DeleteRelacionamentos1713389998980';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -11,9 +11,6 @@ export class CreateTablesOrders1713381788163 implements MigrationInterface {
       `CREATE TABLE "order_itens" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "quantity" integer NOT NULL, "sale_price" integer NOT NULL, "orderId" uuid, CONSTRAINT "PK_4e69f9594b97fc9d37c2e398688" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `ALTER TABLE "product_images" ALTER COLUMN "alt" DROP NOT NULL`,
-    );
-    await queryRunner.query(
       `ALTER TABLE "order_itens" ADD CONSTRAINT "FK_ed0ac6189151c9f2d3eaab71030" FOREIGN KEY ("orderId") REFERENCES "orders"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
     );
   }
@@ -21,9 +18,6 @@ export class CreateTablesOrders1713381788163 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `ALTER TABLE "order_itens" DROP CONSTRAINT "FK_ed0ac6189151c9f2d3eaab71030"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "product_images" ALTER COLUMN "alt" SET NOT NULL`,
     );
     await queryRunner.query(`DROP TABLE "order_itens"`);
     await queryRunner.query(`DROP TABLE "orders"`);

@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { ProductsCharacteristicsEntity } from './productCharacteristics.entity';
 import { ProductsImagesEntity } from './productsImages.entity';
-import { OrderItensEntity } from 'src/modules/orders/entities/orderItens.entity';
+import { OrderItensEntity } from '../../orders/entities/orderItens.entity';
 @Entity({ name: 'products' })
 export class ProductEntity {
   @PrimaryGeneratedColumn('uuid')
