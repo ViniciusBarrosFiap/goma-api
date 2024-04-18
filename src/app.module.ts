@@ -7,6 +7,8 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { ProductsModule } from './modules/products/products.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { AuthenticationModule } from './modules/authentication/authentication.module';
+
 //Arquivo dedicado a integrar os módulos de toda a aplicação
 @Module({
   //Definindo as classes necessárias para a aplicação
@@ -28,6 +30,7 @@ import { OrdersModule } from './modules/orders/orders.module';
     }),
     ProductsModule,
     OrdersModule,
+    AuthenticationModule,
   ],
   //Especifica as classes que irão fornecer funções para aplicação
   providers: [],
