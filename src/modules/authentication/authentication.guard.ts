@@ -8,7 +8,7 @@ import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { UserPayload } from './authentication.service';
-import { ROLES_KEY } from 'src/decorators/roles.decorator';
+import { ROLES_KEY } from 'src/resources/decorators/roles.decorator';
 import { UserType } from 'aws-sdk/clients/workdocs';
 //Extende o Request do express adicionando a propriedade usuario com as propriedades do payload
 export interface RequestWithUser extends Request {

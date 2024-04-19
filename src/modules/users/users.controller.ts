@@ -16,6 +16,8 @@ import { CreateUserDTO } from './dto/CreateUser.dto';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { UpdateUserDTO } from './dto/UpdateUser.dto';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
+import { Roles } from 'src/resources/decorators/roles.decorator';
+import { UserType } from './enum/user-type.enum';
 // import { UpdateUserDto } from './dto/UpdateUser.dto';
 
 @Controller('users')
@@ -46,6 +48,8 @@ export class UsersController {
   //method for listing all users
   @Get()
   @UseInterceptors(CacheInterceptor)
+  @UseGuards(AuthenticationGuard)
+  @Roles(UserType.Admin)
   async listAllUsers() {
     return await this.userService.listAllUsers();
   }
@@ -53,6 +57,9 @@ export class UsersController {
   //method for getting one specific user by id
   @Get(':id')
   @UseInterceptors(CacheInterceptor)
+  @UseGuards(AuthenticationGuard)
+  @Roles(UserType.User)
+  @Roles(UserType.Admin)
   async getUser(@Param('id') id: string) {
     const user = await this.userService.searchByID(id);
     return {
@@ -68,6 +75,7 @@ export class UsersController {
   //method to update an existing user
   @Put(':id')
   @UseGuards(AuthenticationGuard)
+  @Roles(UserType.User)
   async updateUser(@Param('id') id: string, @Body() updateData: UpdateUserDTO) {
     const updatedUser = await this.userService.updateUser(id, updateData);
     return {
@@ -77,6 +85,9 @@ export class UsersController {
   }
   //method to delete a user from the
   @Delete(':id')
+  @UseGuards(AuthenticationGuard)
+  @Roles(UserType.Admin)
+  @Roles(UserType.User)
   async removeUser(@Param('id') id: string) {
     return await this.userService.deleteUser(id);
   }

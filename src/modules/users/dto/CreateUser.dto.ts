@@ -10,6 +10,7 @@ import {
 import { EmailIsUnique } from '../validators/email-verificator.validator';
 import { CpfIsUnique } from '../validators/cpf-verificator.validator';
 import { IsOverEighteen } from '../validators/over-eighteen.validator';
+import { CpfIsValid } from '../validators/cpf -is-valid';
 
 export class CreateUserDTO {
   @IsNotEmpty({ message: 'O nome não pode ser vázio' })
@@ -31,6 +32,7 @@ export class CreateUserDTO {
     message: 'Formato de CPF inválido, exemplo: 000.000.000-00',
   })
   @CpfIsUnique({ message: 'O cpf já foi cadastrado' })
+  @CpfIsValid({ message: 'CPF inválido' })
   cpf: string;
 
   @IsOptional()

@@ -40,6 +40,42 @@ export class UserService {
     }
     return user;
   }
+
+  async testCpf(cpf: string): Promise<boolean> {
+    // Remove caracteres não numéricos (pontos e traço) do CPF
+    const cleanCpf = cpf.replace(/\D/g, '');
+
+    // Verifica se o CPF tem 11 dígitos e não é uma sequência de dígitos iguais
+    if (cleanCpf.length !== 11 || /^(.)\1{10}$/.test(cleanCpf)) {
+      return false;
+    }
+
+    // Calcula os dígitos verificadores
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+      sum += parseInt(cleanCpf.charAt(i)) * (10 - i);
+    }
+    let rest = sum % 11;
+    const firstDigit = rest < 2 ? 0 : 11 - rest;
+
+    if (parseInt(cleanCpf.charAt(9)) !== firstDigit) {
+      return false; // Primeiro dígito verificador incorreto
+    }
+
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+      sum += parseInt(cleanCpf.charAt(i)) * (11 - i);
+    }
+    rest = sum % 11;
+    const secondDigit = rest < 2 ? 0 : 11 - rest;
+
+    if (parseInt(cleanCpf.charAt(10)) !== secondDigit) {
+      return false; // Segundo dígito verificador incorreto
+    }
+
+    // CPF válido se passou por todas as verificações
+    return true;
+  }
   //Function for create a user
   async createUser(userData: CreateUserDTO) {
     const userEntity = new UserEntity();

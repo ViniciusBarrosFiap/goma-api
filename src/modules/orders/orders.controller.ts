@@ -14,7 +14,7 @@ import {
 } from '../authentication/authentication.guard';
 import { CreateOrderDTO } from './dto/create-order.dto';
 import { UpdateOrderDTO } from './dto/update-order.dto';
-import { Roles } from 'src/decorators/roles.decorator';
+import { Roles } from 'src/resources/decorators/roles.decorator';
 import { UserType } from '../users/enum/user-type.enum';
 @UseGuards(AuthenticationGuard)
 @Controller('orders')
@@ -29,6 +29,7 @@ export class OrdersController {
     return orders;
   }
   @Post()
+  @Roles(UserType.User)
   async createOrder(
     @Req() req: RequestWithUser,
     @Body() orderData: CreateOrderDTO,
@@ -46,6 +47,7 @@ export class OrdersController {
   }
 
   @Post(':id')
+  @Roles(UserType.User)
   async updateOrder(
     @Req() req: RequestWithUser,
     @Param('id') orderId: string,

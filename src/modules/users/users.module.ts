@@ -6,6 +6,7 @@ import { UserEntity } from './entities/user.entity';
 import { EmailIsUniqueValidator } from './validators/email-verificator.validator';
 import { CpfIsUniqueValidator } from './validators/cpf-verificator.validator';
 import { OverEighteenValidator } from './validators/over-eighteen.validator';
+import { cpfValidator } from './validators/cpf -is-valid';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
@@ -15,6 +16,7 @@ import { OverEighteenValidator } from './validators/over-eighteen.validator';
     EmailIsUniqueValidator,
     CpfIsUniqueValidator,
     OverEighteenValidator,
+    cpfValidator,
   ],
   exports: [UserService],
 })
