@@ -39,6 +39,9 @@ export class UserEntity {
   @Column({ name: 'date_birthday', length: 10, nullable: false })
   dateBirthday: string;
 
+  @Column({ name: 'user_type', nullable: false })
+  userType: string;
+
   @Column({ name: 'gender', nullable: true }) // Tornando a propriedade opcional
   gender?: string;
   @OneToMany(() => OrderEntity, (order) => order.user)

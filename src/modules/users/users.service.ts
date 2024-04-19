@@ -19,7 +19,14 @@ export class UserService {
   async listAllUsers() {
     const allUsers = await this.userRepository.find(); //Searching all users in DB
     const userList = allUsers.map(
-      (user) => new UserListDTO(user.id, user.name, user.email, user.cpf),
+      (user) =>
+        new UserListDTO(
+          user.id,
+          user.name,
+          user.email,
+          user.cpf,
+          user.userType,
+        ),
     );
     return userList;
   }

@@ -14,12 +14,15 @@ import {
 } from '../authentication/authentication.guard';
 import { CreateOrderDTO } from './dto/create-order.dto';
 import { UpdateOrderDTO } from './dto/update-order.dto';
+import { Roles } from 'src/decorators/roles.decorator';
+import { UserType } from '../users/enum/user-type.enum';
 @UseGuards(AuthenticationGuard)
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Get()
+  @Roles(UserType.User)
   async getOrderFromUser(@Req() req: RequestWithUser) {
     const userId = req.user.sub;
     const orders = await this.ordersService.getOrderOfUser(userId);
@@ -31,7 +34,6 @@ export class OrdersController {
     @Body() orderData: CreateOrderDTO,
   ) {
     const userId = req.user.sub;
-    // console.log(userId);
     const createdOrder = await this.ordersService.createOrder(
       userId,
       orderData,

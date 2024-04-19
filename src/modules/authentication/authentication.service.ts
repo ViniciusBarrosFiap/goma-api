@@ -9,6 +9,7 @@ import { UserService } from '../users/users.service';
 export interface UserPayload {
   sub: string;
   username: string;
+  userType: string;
 }
 @Injectable() //Definindo a classe como injetavel
 export class AuthenticatorService {
@@ -38,6 +39,7 @@ export class AuthenticatorService {
     const payload: UserPayload = {
       sub: user.id, //subject -> sujeito
       username: user.name,
+      userType: user.userType,
     };
     //Retorna o token gerado caso tenha sido autenticado
     return {

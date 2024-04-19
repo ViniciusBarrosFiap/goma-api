@@ -38,6 +38,7 @@ export class UsersController {
         createdUser.name,
         createdUser.email,
         createdUser.cpf,
+        createdUser.userType,
       ),
       message: 'Usuário criado com sucesso',
     };
@@ -55,7 +56,13 @@ export class UsersController {
   async getUser(@Param('id') id: string) {
     const user = await this.userService.searchByID(id);
     return {
-      user: new UserListDTO(user.id, user.name, user.email, user.cpf),
+      user: new UserListDTO(
+        user.id,
+        user.name,
+        user.email,
+        user.cpf,
+        user.userType,
+      ),
     };
   }
   //method to update an existing user

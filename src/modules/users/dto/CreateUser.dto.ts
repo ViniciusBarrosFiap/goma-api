@@ -1,6 +1,12 @@
 // import { PartialType } from '@nestjs/mapped-types';
 // import { UserEntity } from '../entities/user.entity';
-import { IsEmail, IsNotEmpty, IsOptional, Matches } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Matches,
+} from 'class-validator';
 import { EmailIsUnique } from '../validators/email-verificator.validator';
 import { CpfIsUnique } from '../validators/cpf-verificator.validator';
 import { IsOverEighteen } from '../validators/over-eighteen.validator';
@@ -39,4 +45,8 @@ export class CreateUserDTO {
 
   @IsOptional()
   gender?: string;
+
+  @IsNotEmpty({ message: 'Data de nascimento não pode ser inválida' })
+  @IsString()
+  userType: string;
 }
