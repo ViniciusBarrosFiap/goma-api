@@ -45,9 +45,6 @@ export class CreateUserDTO {
   @IsOverEighteen({ message: 'É preciso ser maior de idade para se cadastrar' })
   dateBirthday: string;
 
-  @IsOptional()
-  gender?: string;
-
   @IsNotEmpty({ message: 'Data de nascimento não pode ser inválida' })
   @IsString()
   userType: string;

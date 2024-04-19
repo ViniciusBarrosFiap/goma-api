@@ -5,13 +5,11 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  // Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { OrderEntity } from '../../orders/entities/order.entity';
-// import { IsEmail, IsNotEmpty, IsOptional, Matches } from 'class-validator';
-// import { EmailIsUnique } from '../validators/email-verificator.validator';
+
 @Entity('users')
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -42,8 +40,6 @@ export class UserEntity {
   @Column({ name: 'user_type', nullable: false })
   userType: string;
 
-  @Column({ name: 'gender', nullable: true }) // Tornando a propriedade opcional
-  gender?: string;
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
 
