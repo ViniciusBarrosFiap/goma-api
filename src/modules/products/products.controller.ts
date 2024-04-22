@@ -44,7 +44,7 @@ export class ProductsController {
     const signedUrls = await this.productsService.uploadImagesS3(fileData);
     return { urls: signedUrls };
   }
-  @UseInterceptors(AuthenticationGuard)
+
   @Get()
   @UseInterceptors(CacheInterceptor)
   async listAllProducts() {

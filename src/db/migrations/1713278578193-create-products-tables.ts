@@ -11,7 +11,7 @@ export class CreateProductsTables1713278578193 implements MigrationInterface {
       `CREATE TABLE "products" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(50) NOT NULL, "brand" character varying(50) NOT NULL, "price" integer NOT NULL, "quantityAvlb" integer NOT NULL, "category" character varying(50) NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, CONSTRAINT "PK_0806c755e0aca124e67c0cf6d7d" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "product_images" ("id" SERIAL NOT NULL, "url" character varying(100) NOT NULL, "alt" character varying(100), "productId" uuid, CONSTRAINT "PK_1974264ea7265989af8392f63a1" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "product_images" ("id" SERIAL NOT NULL, "url" character varying NOT NULL, "alt" character varying(100), "productId" uuid, CONSTRAINT "PK_1974264ea7265989af8392f63a1" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `ALTER TABLE "users" ALTER COLUMN "cell_number" DROP NOT NULL`,

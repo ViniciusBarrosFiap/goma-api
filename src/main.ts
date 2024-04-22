@@ -13,6 +13,7 @@ async function bootstrap() {
     }),
   );
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-  await app.listen(3000); //The aplication is listening to the port 3000
+  app.enableCors();
+  await app.listen(4000); //The aplication is listening to the port 3000
 }
 bootstrap();
