@@ -13,7 +13,7 @@ import { AuthenticatorService } from './authentication.service';
     JwtModule.registerAsync({
       useFactory: (configService: ConfigService) => {
         return {
-          secret: configService.get<string>('SEGREDO_JWT'), //Atribui a chave segreta do JWT
+          secret: configService.get<string>('SECRET_JWT'), //Atribui a chave segreta do JWT
           signOptions: { expiresIn: '72h' }, //Define o tempo que o token é válido
         };
       },
