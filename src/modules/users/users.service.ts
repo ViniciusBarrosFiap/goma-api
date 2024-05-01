@@ -26,6 +26,8 @@ export class UserService {
           user.email,
           user.cpf,
           user.userType,
+          user.address,
+          user.cellNumber,
         ),
     );
     return userList;

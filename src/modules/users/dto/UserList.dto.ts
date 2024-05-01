@@ -6,5 +6,7 @@ export class UserListDTO {
     readonly email: string,
     readonly cpf: string,
     readonly userType: string,
+    readonly address: string,
+    readonly cellNumber: string,
   ) {}
 }

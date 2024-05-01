@@ -41,6 +41,8 @@ export class UsersController {
         createdUser.email,
         createdUser.cpf,
         createdUser.userType,
+        createdUser.address,
+        createdUser.cellNumber,
       ),
       message: 'Usuário criado com sucesso',
     };
@@ -69,6 +71,8 @@ export class UsersController {
         user.email,
         user.cpf,
         user.userType,
+        user.address,
+        user.cellNumber,
       ),
     };
   }
@@ -76,8 +80,16 @@ export class UsersController {
   @Put(':id')
   @UseGuards(AuthenticationGuard)
   @Roles(UserType.User)
-  async updateUser(@Param('id') id: string, @Body() updateData: UpdateUserDTO) {
-    const updatedUser = await this.userService.updateUser(id, updateData);
+  async updateUser(
+    @Param('id') id: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    @Body() { password, ...updateData }: UpdateUserDTO,
+    @Body('password', HashPasswordPipe) hashPassword: string,
+  ) {
+    const updatedUser = await this.userService.updateUser(id, {
+      ...updateData,
+      password: hashPassword,
+    });
     return {
       user: updatedUser,
       message: 'Usuário atualizado com sucesso',
