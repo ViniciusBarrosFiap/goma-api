@@ -6,7 +6,7 @@ export class PostgresConfigService implements TypeOrmOptionsFactory {
   //Starting the variable with features of ConfigService
   constructor(private configService: ConfigService) {}
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    console.log('Conexão feita com sucesso');
+    console.log('Conexão feita com sucesso ');
     return {
       type: 'postgres',
       host: this.configService.get<string>('DB_HOST'),
