@@ -12,6 +12,7 @@ export class ListProductsDTO {
   constructor(
     readonly id: string,
     readonly name: string,
+    readonly description: string,
     readonly brand: string,
     readonly price: number,
     readonly characteristics: ListCharacteristicsProductsDTO[],

@@ -53,9 +53,6 @@ export class ProductsController {
 
   @Get(':id')
   @UseInterceptors(CacheInterceptor)
-  @UseGuards(AuthenticationGuard)
-  @Roles(UserType.Admin)
-  @Roles(UserType.User)
   async searchUserById(@Param('id') id: string) {
     const possibleProduct = await this.productsService.searchById(id);
     if (!possibleProduct) {

@@ -16,8 +16,10 @@ export class ProductEntity {
   id: string;
   @Column({ name: 'name', length: 50, nullable: false })
   name: string;
-  @Column({ name: 'brand', length: 50, nullable: false })
+  @Column({ name: 'description', length: 50, nullable: false })
   brand: string;
+  @Column({ name: 'brand', length: 50, nullable: false })
+  description: string;
   @Column({ name: 'price', nullable: false })
   price: number;
   @Column({ name: 'quantityAvlb', nullable: false })

@@ -55,6 +55,7 @@ export class ProductsService {
         new ListProductsDTO(
           product.id,
           product.name,
+          product.description,
           product.brand,
           product.price,
           product.characteristics,
